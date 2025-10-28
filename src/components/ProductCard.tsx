@@ -3,7 +3,7 @@ import { Star, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useCart } from "@/contexts/CartContext";
-import { Product } from "@/data/products";
+import { Product, getProductById } from "@/data/products";
 
 interface ProductCardProps extends Omit<Product, 'description' | 'benefits' | 'ingredients' | 'usage'> {}
 
@@ -23,21 +23,11 @@ const ProductCard = ({
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    addToCart({ 
-      id, 
-      name, 
-      price, 
-      originalPrice, 
-      rating, 
-      reviews, 
-      image, 
-      badge, 
-      category,
-      description: '',
-      benefits: [],
-      ingredients: '',
-      usage: ''
-    }, 1);
+    
+    const fullProduct = getProductById(id);
+    if (fullProduct) {
+      addToCart(fullProduct, 1);
+    }
   };
   return (
     <Card className="group hover:shadow-hover transition-smooth overflow-hidden">

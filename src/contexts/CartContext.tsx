@@ -48,7 +48,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         });
         return prevItems.map((item) =>
           item.id === product.id
-            ? { ...item, quantity: item.quantity + quantity }
+            ? { ...product, quantity: item.quantity + quantity }
             : item
         );
       } else {
