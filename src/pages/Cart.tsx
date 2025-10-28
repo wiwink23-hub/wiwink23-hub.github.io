@@ -4,22 +4,13 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Trash2, Plus, Minus } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { allProducts } from "@/data/products";
+import { useCart } from "@/contexts/CartContext";
 
 const Cart = () => {
-  const cartItems = [
-    {
-      ...allProducts[0],
-      quantity: 2,
-    },
-    {
-      ...allProducts[1],
-      quantity: 1,
-    },
-  ];
+  const { cartItems, removeFromCart, updateQuantity, getCartTotal } = useCart();
 
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const shipping = 5.99;
+  const subtotal = getCartTotal();
+  const shipping = subtotal >= 40 ? 0 : 5.99;
   const total = subtotal + shipping;
 
   return (
@@ -50,21 +41,39 @@ const Cart = () => {
                         className="w-24 h-24 object-cover rounded-lg bg-muted"
                       />
                       <div className="flex-1">
-                        <h3 className="font-medium mb-2">{item.name}</h3>
-                        <p className="text-lg font-bold text-primary mb-4">
+                        <h3 className="font-medium mb-2" data-testid={`text-product-name-${item.id}`}>{item.name}</h3>
+                        <p className="text-lg font-bold text-primary mb-4" data-testid={`text-product-price-${item.id}`}>
                           ${item.price.toFixed(2)}
                         </p>
                         <div className="flex items-center gap-3">
                           <div className="flex items-center gap-2 border rounded-md">
-                            <Button variant="ghost" size="icon" className="h-8 w-8">
+                            <Button 
+                              variant="ghost" 
+                              size="icon" 
+                              className="h-8 w-8"
+                              onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                              data-testid={`button-decrease-${item.id}`}
+                            >
                               <Minus className="h-4 w-4" />
                             </Button>
-                            <span className="w-8 text-center">{item.quantity}</span>
-                            <Button variant="ghost" size="icon" className="h-8 w-8">
+                            <span className="w-8 text-center" data-testid={`text-quantity-${item.id}`}>{item.quantity}</span>
+                            <Button 
+                              variant="ghost" 
+                              size="icon" 
+                              className="h-8 w-8"
+                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                              data-testid={`button-increase-${item.id}`}
+                            >
                               <Plus className="h-4 w-4" />
                             </Button>
                           </div>
-                          <Button variant="ghost" size="sm" className="text-destructive">
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            className="text-destructive"
+                            onClick={() => removeFromCart(item.id)}
+                            data-testid={`button-remove-${item.id}`}
+                          >
                             <Trash2 className="h-4 w-4 mr-2" />
                             Remove
                           </Button>
@@ -105,7 +114,15 @@ const Cart = () => {
 
                 <div className="mt-6 p-4 bg-muted rounded-lg">
                   <p className="text-sm text-center">
-                    <span className="font-semibold text-primary">Free shipping</span> on orders over $40
+                    {subtotal >= 40 ? (
+                      <span className="font-semibold text-primary">Free shipping applied!</span>
+                    ) : (
+                      <>
+                        <span className="font-semibold text-primary">Free shipping</span> on orders over $40
+                        <br />
+                        <span className="text-xs">Add ${(40 - subtotal).toFixed(2)} more to qualify</span>
+                      </>
+                    )}
                   </p>
                 </div>
               </div>

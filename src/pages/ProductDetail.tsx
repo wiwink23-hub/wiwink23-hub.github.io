@@ -7,13 +7,21 @@ import { Star, ShoppingCart, Heart, Share2, Check } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProductCard from "@/components/ProductCard";
 import { getProductById, allProducts } from "@/data/products";
+import { useCart } from "@/contexts/CartContext";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [quantity, setQuantity] = useState(1);
+  const { addToCart } = useCart();
   
   const product = id ? getProductById(id) : allProducts[0];
-  const relatedProducts = allProducts.slice(0, 4);
+  const relatedProducts = allProducts.filter(p => p.category === product?.category && p.id !== product?.id).slice(0, 4);
+
+  const handleAddToCart = () => {
+    if (product) {
+      addToCart(product, quantity);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -77,7 +85,7 @@ const ProductDetail = () => {
                 )}
               </div>
               <p className="text-muted-foreground">
-                High-quality health supplement that supports your wellness goals. Made with premium ingredients and backed by research.
+                {product?.description}
               </p>
             </div>
 
@@ -85,12 +93,7 @@ const ProductDetail = () => {
             <div className="mb-6 p-4 bg-muted rounded-lg">
               <h3 className="font-semibold mb-3">Key Benefits</h3>
               <ul className="space-y-2">
-                {[
-                  "Supports bone health and calcium absorption",
-                  "Boosts immune system function",
-                  "Promotes mood and mental wellbeing",
-                  "Non-GMO and gluten-free",
-                ].map((benefit) => (
+                {product?.benefits.map((benefit) => (
                   <li key={benefit} className="flex items-start gap-2">
                     <Check className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
                     <span className="text-sm">{benefit}</span>
@@ -123,14 +126,20 @@ const ProductDetail = () => {
 
             {/* Action Buttons */}
             <div className="flex gap-3 mb-6">
-              <Button variant="hero" size="lg" className="flex-1">
+              <Button 
+                variant="hero" 
+                size="lg" 
+                className="flex-1" 
+                onClick={handleAddToCart}
+                data-testid="button-add-to-cart"
+              >
                 <ShoppingCart className="mr-2 h-5 w-5" />
                 Add to Cart
               </Button>
-              <Button variant="outline" size="icon" className="h-12 w-12">
+              <Button variant="outline" size="icon" className="h-12 w-12" data-testid="button-favorite">
                 <Heart className="h-5 w-5" />
               </Button>
-              <Button variant="outline" size="icon" className="h-12 w-12">
+              <Button variant="outline" size="icon" className="h-12 w-12" data-testid="button-share">
                 <Share2 className="h-5 w-5" />
               </Button>
             </div>
@@ -164,33 +173,26 @@ const ProductDetail = () => {
             </TabsList>
             <TabsContent value="description" className="mt-6">
               <div className="prose max-w-none">
-                <p>
-                  Our Vitamin D3 5000 IU supplement provides a high-potency dose of the "sunshine vitamin" to support your overall health and wellbeing. Vitamin D3 is essential for maintaining strong bones and teeth, supporting immune system function, and promoting healthy mood and mental clarity.
-                </p>
-                <p className="mt-4">
-                  Each softgel contains 5000 IU of vitamin D3 (cholecalciferol), the most bioavailable form of vitamin D. Our formula is non-GMO, gluten-free, and manufactured in a GMP-certified facility to ensure the highest quality standards.
+                <p className="text-muted-foreground leading-relaxed">
+                  {product?.description}
                 </p>
               </div>
             </TabsContent>
             <TabsContent value="ingredients" className="mt-6">
               <div className="prose max-w-none">
                 <h3 className="font-semibold mb-3">Supplement Facts</h3>
-                <p>Serving Size: 1 Softgel</p>
-                <ul className="mt-4 space-y-2">
-                  <li>Vitamin D3 (as Cholecalciferol) - 5000 IU (1250% DV)</li>
-                </ul>
-                <p className="mt-4 text-sm text-muted-foreground">
-                  Other Ingredients: Organic Extra Virgin Olive Oil, Softgel Capsule (Bovine Gelatin, Glycerin, Purified Water)
+                <p className="text-muted-foreground whitespace-pre-line">
+                  {product?.ingredients}
                 </p>
               </div>
             </TabsContent>
             <TabsContent value="usage" className="mt-6">
               <div className="prose max-w-none">
-                <p>
-                  Take one (1) softgel daily, preferably with a meal, or as directed by your healthcare professional. For best absorption, take with a meal containing healthy fats.
+                <p className="text-muted-foreground leading-relaxed">
+                  {product?.usage}
                 </p>
                 <p className="mt-4 font-semibold">Important Notes:</p>
-                <ul className="mt-2 space-y-1">
+                <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
                   <li>Consult your healthcare provider before use if you are pregnant, nursing, or taking medications</li>
                   <li>Keep out of reach of children</li>
                   <li>Store in a cool, dry place</li>

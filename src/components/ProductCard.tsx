@@ -2,17 +2,10 @@ import { Link } from "react-router-dom";
 import { Star, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useCart } from "@/contexts/CartContext";
+import { Product } from "@/data/products";
 
-interface ProductCardProps {
-  id: string;
-  name: string;
-  price: number;
-  originalPrice?: number;
-  rating: number;
-  reviews: number;
-  image: string;
-  badge?: string;
-}
+interface ProductCardProps extends Omit<Product, 'description' | 'benefits' | 'ingredients' | 'usage'> {}
 
 const ProductCard = ({
   id,
@@ -23,7 +16,29 @@ const ProductCard = ({
   reviews,
   image,
   badge,
+  category,
 }: ProductCardProps) => {
+  const { addToCart } = useCart();
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addToCart({ 
+      id, 
+      name, 
+      price, 
+      originalPrice, 
+      rating, 
+      reviews, 
+      image, 
+      badge, 
+      category,
+      description: '',
+      benefits: [],
+      ingredients: '',
+      usage: ''
+    }, 1);
+  };
   return (
     <Card className="group hover:shadow-hover transition-smooth overflow-hidden">
       <Link to={`/product/${id}`}>
@@ -66,7 +81,13 @@ const ProductCard = ({
               </span>
             )}
           </div>
-          <Button size="icon" variant="ghost" className="hover:bg-primary hover:text-primary-foreground">
+          <Button 
+            size="icon" 
+            variant="ghost" 
+            className="hover:bg-primary hover:text-primary-foreground"
+            onClick={handleAddToCart}
+            data-testid={`button-add-cart-${id}`}
+          >
             <ShoppingCart className="h-4 w-4" />
           </Button>
         </div>
