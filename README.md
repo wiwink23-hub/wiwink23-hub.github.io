@@ -1,73 +1,117 @@
-# Welcome to your Lovable project
+# HealthMart - E-commerce Suplemen & Vitamin
 
-## Project info
+Website e-commerce modern untuk produk kesehatan, suplemen, dan vitamin yang dibangun dengan React, TypeScript, dan Tailwind CSS.
 
-**URL**: https://lovable.dev/projects/1fdcbb58-8349-44d6-a541-1da51ec47387
+🌐 **Live Demo**: https://wiwink23-hub.github.io/
 
-## How can I edit this code?
+## 🚀 Fitur
 
-There are several ways of editing your application.
+- ✨ Desain modern dan responsif
+- 🛒 Sistem keranjang belanja
+- 📱 Mobile-friendly
+- 🎨 UI components menggunakan shadcn/ui
+- ⚡ Build dengan Vite untuk performa maksimal
+- 🌐 Deploy otomatis ke GitHub Pages
 
-**Use Lovable**
+## 🛠️ Teknologi
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/1fdcbb58-8349-44d6-a541-1da51ec47387) and start prompting.
+- **React 18** - Library UI
+- **TypeScript** - Type-safe JavaScript
+- **Vite** - Build tool yang cepat
+- **Tailwind CSS** - Utility-first CSS framework
+- **shadcn/ui** - Komponen UI berkualitas tinggi
+- **React Router** - Routing
+- **TanStack Query** - Data fetching & state management
+- **Lucide React** - Icon library
 
-Changes made via Lovable will be committed automatically to this repo.
+## 📦 Instalasi & Development
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+```bash
+# Clone repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Install dependencies
+npm install
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Jalankan development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Aplikasi akan berjalan di `http://localhost:5000`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🏗️ Build untuk Production
 
-**Use GitHub Codespaces**
+```bash
+npm run build
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+File hasil build akan tersimpan di folder `dist/`.
 
-## What technologies are used for this project?
+## 🌐 Deploy ke GitHub Pages
 
-This project is built with:
+### Otomatis dengan GitHub Actions (Direkomendasikan)
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Project ini sudah dikonfigurasi dengan GitHub Actions untuk deployment otomatis:
 
-## How can I deploy this project?
+1. **Setup GitHub Pages**:
+   - Pergi ke repository Settings → Pages
+   - Di bagian "Source", pilih **GitHub Actions**
+   - Save
 
-Simply open [Lovable](https://lovable.dev/projects/1fdcbb58-8349-44d6-a541-1da51ec47387) and click on Share -> Publish.
+2. **Push kode ke GitHub**:
+   ```bash
+   git add .
+   git commit -m "Setup GitHub Pages deployment"
+   git push origin main
+   ```
 
-## Can I connect a custom domain to my Lovable project?
+3. Website akan otomatis deploy dan tersedia di: **https://wiwink23-hub.github.io/**
 
-Yes, you can!
+### Manual Deploy (Alternatif)
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```bash
+npm run deploy
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Kemudian aktifkan GitHub Pages:
+- **Settings** → **Pages**
+- Source: branch `gh-pages`
+- Folder: `/` (root)
+
+## 📝 Struktur Proyek
+
+```
+src/
+├── components/        # Komponen React
+│   ├── ui/           # shadcn/ui components
+│   ├── Navbar.tsx
+│   ├── Footer.tsx
+│   └── ProductCard.tsx
+├── pages/            # Halaman aplikasi
+│   ├── Home.tsx
+│   ├── Shop.tsx
+│   ├── Cart.tsx
+│   └── ...
+├── data/             # Data produk
+├── hooks/            # Custom hooks
+├── lib/              # Utilities
+└── App.tsx           # Main app component
+```
+
+## 🎨 Customization
+
+- Edit warna tema di `src/index.css`
+- Modifikasi komponen di folder `src/components/`
+- Update data produk di `src/data/products.ts`
+
+## 📖 Dokumentasi Lengkap
+
+Lihat [DEPLOYMENT.md](DEPLOYMENT.md) untuk panduan deployment lengkap.
+
+## 📄 Lisensi
+
+MIT License - Bebas digunakan untuk proyek pribadi maupun komersial.
+
+---
+
+Dibuat dengan ❤️ menggunakan React & TypeScript

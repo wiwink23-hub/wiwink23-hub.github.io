@@ -1,82 +1,88 @@
-# GitHub Pages Deployment Guide
+# Panduan Deploy ke GitHub Pages
 
-This project is configured to deploy to GitHub Pages with the root directory ("/") as the base path.
+Proyek ini dikonfigurasi untuk deploy ke GitHub Pages di https://wiwink23-hub.github.io/ dengan direktori root ("/").
 
-## Configuration
+## Konfigurasi
 
-The following configurations have been set up for GitHub Pages deployment:
+Konfigurasi berikut telah diatur untuk deployment GitHub Pages:
 
 ### Vite Configuration
-- **Base path**: Set to `"/"` in `vite.config.ts` for deployment at the root directory
-- **Server**: Configured to run on port 5000 with host `0.0.0.0`
+- **Base path**: Diatur ke `"/"` di `vite.config.ts` untuk deployment di root directory
+- **Build output**: Folder `dist` dengan assets di `assets/`
+- **Server**: Dikonfigurasi untuk berjalan di port 5000 dengan host `0.0.0.0`
 
-### NPM Scripts
-Two deployment scripts have been added to `package.json`:
+## Cara Deploy
+
+### Metode 1: GitHub Actions (Otomatis) - **DIREKOMENDASIKAN**
+
+File workflow GitHub Actions sudah dibuat di `.github/workflows/deploy.yml`. Deployment akan otomatis ketika Anda push ke branch `main`.
+
+**Langkah-langkah**:
+
+1. **Setup GitHub Pages di repository**:
+   - Buka repository GitHub Anda
+   - Pergi ke **Settings** → **Pages**
+   - Di bagian "Source", pilih **GitHub Actions**
+   - Save
+
+2. **Push kode ke GitHub**:
+   ```bash
+   git add .
+   git commit -m "Setup GitHub Pages deployment"
+   git push origin main
+   ```
+
+3. **Website Anda akan tersedia di**: https://wiwink23-hub.github.io/
+
+### Metode 2: Manual Deploy dengan gh-pages
+
+Jika ingin deploy manual:
 
 ```bash
-npm run predeploy  # Automatically builds the project before deployment
-npm run deploy     # Deploys the built files to GitHub Pages
+npm run deploy
 ```
 
-## How to Deploy
+Perintah ini akan:
+- Build proyek Anda (`npm run build`)
+- Deploy folder `dist` ke branch `gh-pages`
+- Push ke GitHub
 
-### Prerequisites
-1. Make sure you have a GitHub repository set up
-2. Ensure you have committed all your changes to git
-3. The `gh-pages` package is already installed
-
-### Deployment Steps
-
-1. **Build and Deploy**:
-   ```bash
-   npm run deploy
-   ```
-   This command will:
-   - Build your project (`npm run build`)
-   - Deploy the `dist` folder to the `gh-pages` branch
-   - Push to GitHub
-
-2. **Enable GitHub Pages**:
-   - Go to your GitHub repository
-   - Navigate to **Settings** → **Pages**
-   - Under "Source", select the `gh-pages` branch
-   - Click Save
-   - Your site will be available at: `https://your-username.github.io/your-repo-name/`
-
-### For Custom Domain or Root Deployment
-
-If you're deploying to a custom domain or the root of your GitHub Pages site (e.g., `username.github.io`):
-- The base path is already set to `"/"` in `vite.config.ts`
-- No additional changes needed
-
-If you're deploying to a repository page (e.g., `username.github.io/repo-name`):
-- Update the `base` in `vite.config.ts` to `"/repo-name/"`
-- Run `npm run deploy` again
+Kemudian di GitHub repository:
+- **Settings** → **Pages**
+- Di "Source", pilih branch `gh-pages`
+- Folder: `/` (root)
+- Save
 
 ## Development
 
-To run the development server locally:
+Untuk menjalankan development server lokal:
 
 ```bash
 npm run dev
 ```
 
-The app will be available at `http://localhost:5000`
+Aplikasi akan tersedia di `http://localhost:5000`
 
 ## Build
 
-To build the project without deploying:
+Untuk build proyek tanpa deploy:
 
 ```bash
 npm run build
 ```
 
-The built files will be in the `dist` directory.
+File hasil build akan ada di folder `dist`.
 
 ## Preview
 
-To preview the built version locally:
+Untuk preview hasil build secara lokal:
 
 ```bash
 npm run preview
 ```
+
+## Catatan Penting
+
+- Pastikan base path di `vite.config.ts` tetap `"/"` untuk deploy di root domain
+- Semua asset (gambar, fonts, dll) akan otomatis ditangani oleh Vite dengan benar
+- Jika ada masalah routing, pastikan repository di-deploy dengan benar dan GitHub Pages sudah aktif
