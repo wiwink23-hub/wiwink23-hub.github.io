@@ -2,6 +2,15 @@
 
 Proyek ini dikonfigurasi untuk deploy ke GitHub Pages di https://wiwink23-hub.github.io/ dengan direktori root ("/").
 
+## ✅ Perbaikan Masalah Blank Page
+
+Website yang sebelumnya blank/putih sudah diperbaiki dengan:
+
+1. **File 404.html** - Menangani client-side routing di GitHub Pages
+2. **Script redirect** - Ditambahkan di index.html untuk routing
+3. **Konfigurasi Vite** - Dioptimalkan untuk GitHub Pages
+4. **Base path "/"** - Sudah benar untuk root directory
+
 ## Konfigurasi
 
 Konfigurasi berikut telah diatur untuk deployment GitHub Pages:
@@ -10,6 +19,7 @@ Konfigurasi berikut telah diatur untuk deployment GitHub Pages:
 - **Base path**: Diatur ke `"/"` di `vite.config.ts` untuk deployment di root directory
 - **Build output**: Folder `dist` dengan assets di `assets/`
 - **Server**: Dikonfigurasi untuk berjalan di port 5000 dengan host `0.0.0.0`
+- **404.html**: Otomatis ter-copy dari folder `public/` ke `dist/`
 
 ## Cara Deploy
 
